@@ -1,0 +1,28 @@
+\section{Universal approximation theorem for 1D functions}
+
+Any sufficiently well-behaved/smooth 1 dimensional function $f:\mathbb{R}\to\mathbb{R}$
+can be expressed in terms of a \emph{Fourier transform} $\tilde{f}:\mathbb{R}\to\mathbb{C}$
+wrt a continuous phase space of frequencies $\omega$:
+\begin{align*}
+f(x) & =\int_{\mathbb{R}}d\omega\;\tilde{f}(\omega)e^{i\omega x}\\
+ & =\mathsf{Re}\left(\int_{\mathbb{R}}d\omega\;\tilde{f}(\omega)e^{i\omega x}\right)\\
+ & =\int_{\mathbb{R}}d\omega\;A(\omega)\cos\left(\omega x+\phi'(\omega)\right)\\
+ & =\int_{\mathbb{R}}d\omega\;A(\omega)\sin\left(\omega x+\phi(\omega)\right)
+\end{align*}
+where $A(\omega)$ and $\phi(\omega)=\phi'(\omega)-\frac{\pi}{2}$
+are real-valued functions. The above integral can be discretized using
+Reimannian sums over a finite set of frequencies $\bm{\Omega}=\left\{ \omega_{1},\omega_{2}\dots\omega_{G}\right\} $
+where cardinality $G$ of the set is the \emph{grid size}. We henceforth
+propose the following variational function $g_{\theta}$ as an ansatz
+for $f(x)$:
+\[
+g_{\theta}(x)=\sum_{i}B_{i}\sin\left(\omega_{i}x+\phi_{i}\right)
+\]
+where we make the replacements $\int_{\mathbb{R}}\to\sum_{i}$, $d\omega A(\omega)\to B_{i}$
+and $\omega,\phi(\omega)\to\omega_{i},\phi_{i}$. Here, we treat all
+the subscripted symbols $B_{i},\omega_{i}$ and $\phi_{i}$ as weights
+whose values can trained to optimize a loss function between $f$
+and $g_{\theta}$, which converges to the Fourier transform integral
+of $f$ as $G\to\infty$. Hence, it's a valid candidate for a learnable
+activation function ansatz to be used in a Kolmogorov-Arnold network
+(KAN)
